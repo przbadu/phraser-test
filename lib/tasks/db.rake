@@ -1,14 +1,19 @@
-namespace :seed do
-  desc 'seed all phrases'
-  task phrases: :environment do
-    [
-      "Don't access information that is non of your bussiness, It can back fire.",
-      'They finally saw eye to eye on the business deal.',
-      'I only go to the cinema once in a blue moon.',
-      'When pigs fly she’ll tidy up her room.',
-      'I let the cat out of the bag about their wedding plans.',
-    ].each do |phrase|
-      Phrase.find_or_create_by(phrase)
+namespace :db do
+  namespace :seed do
+    desc 'seed phrases, db:seed:phrases(n) will generate n phrases; db:seed:phrases will generate default  (10) phrases;'
+    task :phrases, [:count] => [:environment] do |t, args|
+      phrases = []
+      count = args[:count] || 10
+
+      count.to_i.times do |i|
+        id = Phrase.maximum(:id)
+        Phrase.find_or_create_by(
+          title: "This is phrase #{id.nil? ? 1 : id.next}"
+        )
+        print '.'
+      end
+
+      puts "#{count} phrases created. Yay!!"
     end
   end
 end

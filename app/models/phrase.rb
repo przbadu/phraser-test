@@ -1,4 +1,8 @@
 class Phrase < ApplicationRecord
+  # validations
+  validates :title, presence: true
+
+  # scopes
   scope :unread, -> { where(status: 'unread') }
   scope :random, -> { order('RANDOM()') }
 
