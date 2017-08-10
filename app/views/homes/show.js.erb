@@ -1,0 +1,5 @@
+<% if @error %>
+    $('#phrases').html('<%= j @error %>');
+<% else %>
+    $('#phrases').html('<%= escape_javascript(render 'homes/phrase') %>');
+  <% end %>
