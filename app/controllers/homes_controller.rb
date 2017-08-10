@@ -2,20 +2,26 @@ class HomesController < ApplicationController
   def index
     Phrase.reset_all!
     @remaining_phrase = Phrase.unread.count
-    @phrase = Phrase.order('RANDOM()').first
+    @phrase = Phrase.random.first
   end
 
   def show
-    p = Phrase.find(params[:id])
-    p.read_phrase!
-
-    @phrase = Phrase.unread.order('RANDOM()').first
+    get_phrase.read_phrase!
+    @phrase = Phrase.unread.random.first
     @remaining_phrase = Phrase.unread.count
 
-    @error = "No more phrase to read, Please refresh the page!" if @phrase.blank?
-
-    respond_to do |f|
-      f.js
+    if @phrase.blank?
+      @error = "No more phrase to read, Please refresh the page!"
     end
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  private
+
+  def get_phrase
+    @get_phrase = Phrase.find(params[:id])
   end
 end
