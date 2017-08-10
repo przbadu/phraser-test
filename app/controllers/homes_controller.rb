@@ -1,6 +1,7 @@
 class HomesController < ApplicationController
   def index
     Phrase.reset_all!
+    @remaining_phrase = Phrase.unread.count
     @phrase = Phrase.order('RANDOM()').first
   end
 
@@ -8,7 +9,8 @@ class HomesController < ApplicationController
     p = Phrase.find(params[:id])
     p.read_phrase!
 
-    @phrase = Phrase.where(status: 'unread').order('RANDOM()').first
+    @phrase = Phrase.unread.order('RANDOM()').first
+    @remaining_phrase = Phrase.unread.count
 
     @error = "No more phrase to read, Please refresh the page!" if @phrase.blank?
 

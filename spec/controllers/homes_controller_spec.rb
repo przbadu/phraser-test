@@ -4,7 +4,7 @@ RSpec.describe HomesController, type: :controller do
   context '#index' do
     it 'should display random phrase' do
       a = create(:phrase, title: 'first phrase')
-      b = create(:phrase, title: 'first phrase')
+      b = create(:phrase, title: 'second phrase')
 
       get :index
 

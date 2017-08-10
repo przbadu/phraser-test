@@ -1,4 +1,6 @@
 class Phrase < ApplicationRecord
+  scope :unread, -> { where(status: 'unread') }
+
   def self.reset_all!
     Phrase.update_all(status: 'unread')
   end
