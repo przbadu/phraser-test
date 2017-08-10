@@ -1,6 +1,5 @@
 class HomesController < ApplicationController
   def index
-    Phrase.reset_all!
     @remaining_phrase = Phrase.unread.count
     @phrase = Phrase.random.first
   end
