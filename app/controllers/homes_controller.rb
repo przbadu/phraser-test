@@ -1,7 +1,7 @@
 class HomesController < ApplicationController
   def index
-    @phrase = Phrase.order('RANDOM()').first
     Phrase.reset_all!
+    @phrase = Phrase.order('RANDOM()').first
   end
 
   def show
